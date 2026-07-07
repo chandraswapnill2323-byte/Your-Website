@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWN — Your Website. Actually Yours.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16241c;
+    --ink-soft:#223327;
+    --ink-softer:#2c4032;
+    --parchment:#f3ecdd;
+    --parchment-dark:#e6dcc4;
+    --brass:#b08d57;
+    --brass-light:#d3b077;
+    --rust:#a13d2b;
+    --cream:#f7f2e7;
+    --line: rgba(247,242,231,0.14);
+    --shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  ::selection{ background:var(--brass); color:var(--ink); }
+
+  /* Texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(176,141,87,0.07), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(161,61,43,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(22,36,28,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+    max-width:1120px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.3rem;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{ color:var(--brass-light); }
+  .navlinks{
+    display:flex; gap:32px;
+    font-size:0.92rem;
+    color:var(--parchment-dark);
+  }
+  .navlinks a:hover{ color:var(--brass-light); }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--rust);
+    color:var(--cream);
+    padding:12px 22px;
+    border-radius:3px;
+    font-weight:600;
+    font-size:0.92rem;
+    border:1px solid rgba(247,242,231,0.15);
+    cursor:pointer;
+    transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    box-shadow:0 8px 20px rgba(161,61,43,0.25);
+  }
+  .btn:hover{ background:#b6472f; transform:translateY(-2px); box-shadow:0 12px 26px rgba(161,61,43,0.4); }
+  .btn svg{ width:18px; height:18px; }
+  .btn-ghost{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--parchment);
+    box-shadow:none;
+  }
+  .btn-ghost:hover{ background:rgba(247,242,231,0.06); border-color:var(--brass); transform:none; }
+  .nav-cta{ display:none; }
+  @media(min-width:720px){ .nav-cta{ display:inline-flex; } }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:110px 28px 90px;
+    text-align:center;
+    z-index:1;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    border:1px solid var(--line);
+    padding:6px 14px;
+    border-radius:100px;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{ content:"●"; color:var(--rust); font-size:0.6rem; }
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4.6rem);
+    line-height:1.05;
+    max-width:900px;
+    margin:0 auto 22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--brass-light);
+  }
+  .hero p{
+    max-width:560px;
+    margin:0 auto 40px;
+    color:var(--parchment-dark);
+    font-size:1.08rem;
+  }
+  .hero-ctas{
+    display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+    margin-bottom:64px;
+  }
+
+  /* SEAL */
+  .seal-wrap{
+    display:flex; justify-content:center;
+    animation: stamp-in 0.9s cubic-bezier(.2,1.4,.4,1) 0.15s both;
+  }
+  @keyframes stamp-in{
+    0%{ transform:scale(2.6) rotate(-18deg); opacity:0; }
+    60%{ transform:scale(0.94) rotate(-6deg); opacity:1; }
+    100%{ transform:scale(1) rotate(-6deg); opacity:1; }
+  }
+  .seal{ width:190px; height:190px; }
+
+  /* SECTION HEADS */
+  .section{ position:relative; padding:90px 0; z-index:1; }
+  .section-head{ text-align:center; max-width:640px; margin:0 auto 56px; }
+  .section-head .eyebrow{ margin-bottom:18px; }
+  .section-head h2{ font-size:clamp(1.9rem, 4vw, 2.6rem); margin-bottom:14px; }
+  .section-head p{ color:var(--parchment-dark); }
+
+  /* RENT VS OWN */
+  .compare{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  @media(max-width:720px){ .compare{ grid-template-columns:1fr; } }
+  .compare-col{ padding:36px 32px; }
+  .compare-col.rent{ background:rgba(247,242,231,0.03); border-right:1px solid var(--line); }
+  .compare-col.own{ background:linear-gradient(180deg, rgba(176,141,87,0.1), rgba(176,141,87,0.02)); }
+  @media(max-width:720px){ .compare-col.rent{ border-right:none; border-bottom:1px solid var(--line);} }
+  .compare-col h3{
+    font-size:1.3rem; margin-bottom:6px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .compare-col.own h3{ color:var(--brass-light); }
+  .compare-col .tag{ color:var(--parchment-dark); font-size:0.88rem; margin-bottom:26px; display:block; }
+  .compare-list{ list-style:none; display:flex; flex-direction:column; gap:16px; }
+  .compare-list li{
+    display:flex; align-items:flex-start; gap:12px;
+    font-size:0.95rem; color:var(--parchment);
+  }
+  .compare-list li svg{ width:18px; height:18px; flex-shrink:0; margin-top:2px; }
+  .rent svg{ color:#c96a56; }
+  .own svg{ color:var(--brass-light); }
+
+  /* PRICING */
+  .pricing-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  @media(max-width:900px){ .pricing-grid{ grid-template-columns:1fr; max-width:420px; margin:0 auto; } }
+  .plan{
+    background:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:34px 28px;
+    display:flex; flex-direction:column;
+    position:relative;
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .plan:hover{ transform:translateY(-6px); border-color:var(--brass); }
+  .plan.featured{
+    border:1px solid var(--brass);
+    background:linear-gradient(180deg, rgba(176,141,87,0.14), var(--ink-soft) 60%);
+  }
+  .plan-badge{
+    position:absolute; top:-13px; left:28px;
+    background:var(--brass); color:var(--ink);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+    padding:5px 12px; border-radius:100px; font-weight:700;
+  }
+  .plan-name{ font-size:1.25rem; margin-bottom:6px; }
+  .plan-desc{ color:var(--parchment-dark); font-size:0.88rem; margin-bottom:22px; min-height:40px; }
+  .plan-price{ display:flex; align-items:baseline; gap:6px; margin-bottom:4px; }
+  .plan-price .amount{ font-family:'JetBrains Mono', monospace; font-size:2.2rem; font-weight:700; }
+  .plan-price .cur{ font-family:'JetBrains Mono', monospace; font-size:1.2rem; color:var(--brass-light); }
+  .plan-note{ color:var(--parchment-dark); font-size:0.78rem; margin-bottom:26px; font-family:'JetBrains Mono', monospace; letter-spacing:0.02em; }
+  .plan-features{ list-style:none; display:flex; flex-direction:column; gap:13px; margin-bottom:28px; flex-grow:1; }
+  .plan-features li{ display:flex; gap:10px; font-size:0.9rem; align-items:flex-start; }
+  .plan-features li svg{ width:16px; height:16px; color:var(--brass-light); flex-shrink:0; margin-top:3px; }
+  .plan .btn{ width:100%; justify-content:center; }
+  .plan .btn-ghost{ background:transparent; }
+
+  .price-footnote{
+    text-align:center; margin-top:34px; color:var(--parchment-dark); font-size:0.86rem;
+  }
+
+  .pricing-line{
+    text-align:center;
+    max-width:600px;
+    margin:0 auto;
+    padding:48px 32px;
+    border:1px solid var(--brass);
+    border-radius:14px;
+    background:linear-gradient(180deg, rgba(176,141,87,0.1), rgba(176,141,87,0.02));
+  }
+  .pricing-line h2{ font-size:clamp(1.5rem, 3.4vw, 2rem); margin:16px 0 14px; }
+  .pricing-line p{ color:var(--parchment-dark); margin-bottom:28px; }
+  .pricing-line p strong{ color:var(--brass-light); font-weight:600; }
+  .pricing-line .btn{ display:inline-flex; }
+
+  /* HOW IT WORKS */
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  @media(max-width:820px){ .steps{ grid-template-columns:1fr; } }
+  .step{ padding:8px; }
+  .step .num{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--brass-light);
+    font-size:0.85rem;
+    display:block;
+    margin-bottom:14px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+  }
+  .step h3{ font-size:1.2rem; margin-bottom:10px; }
+  .step p{ color:var(--parchment-dark); font-size:0.92rem; }
+
+  /* FAQ */
+  .faq-item{
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+  }
+  .faq-q{
+    display:flex; justify-content:space-between; align-items:center;
+    cursor:pointer; font-family:'Fraunces', serif; font-size:1.08rem; font-weight:600;
+    gap:20px;
+  }
+  .faq-q svg{ flex-shrink:0; transition:transform .25s ease; width:20px; height:20px; color:var(--brass-light); }
+  .faq-item.open .faq-q svg{ transform:rotate(45deg); }
+  .faq-a{
+    max-height:0; overflow:hidden; transition:max-height .3s ease;
+    color:var(--parchment-dark); font-size:0.94rem;
+  }
+  .faq-item.open .faq-a{ max-height:200px; margin-top:14px; }
+
+  /* CTA BANNER */
+  .cta-banner{
+    background:linear-gradient(135deg, var(--ink-softer), var(--ink-soft));
+    border:1px solid var(--brass);
+    border-radius:14px;
+    padding:56px 40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-banner h2{ font-size:clamp(1.8rem,4vw,2.4rem); margin-bottom:16px; }
+  .cta-banner p{ color:var(--parchment-dark); max-width:460px; margin:0 auto 30px; }
+
+  /* FOOTER */
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 28px;
+    text-align:center;
+    color:var(--parchment-dark);
+    font-size:0.85rem;
+    position:relative; z-index:1;
+  }
+
+  /* Floating WhatsApp */
+  .float-wa{
+    position:fixed; bottom:24px; right:24px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:var(--rust);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 26px rgba(161,61,43,0.45);
+    border:1px solid rgba(247,242,231,0.2);
+    animation: float-pulse 2.6s ease-in-out infinite;
+  }
+  .float-wa svg{ width:28px; height:28px; color:var(--cream); }
+  @keyframes float-pulse{
+    0%,100%{ box-shadow:0 10px 26px rgba(161,61,43,0.45); }
+    50%{ box-shadow:0 10px 34px rgba(161,61,43,0.7); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">OWN<span class="dot">.</span></div>
+    <div class="navlinks">
+      <a href="#compare">Why Own</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn nav-cta" id="waNav" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.2.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.51-.17-.01-.36-.01-.56-.01s-.51.08-.78.36c-.26.29-1.02.99-1.02 2.42s1.04 2.81 1.19 3.01c.15.2 2.05 3.13 4.97 4.39.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.11.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.34z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.24-1.37a9.86 9.86 0 0 0 4.8 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.25 8.23z"/></svg>
+      Own a Website Now
+    </a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">for people who want the deed, not the lease</span>
+    <h1>Your website.<br><em>Actually yours.</em></h1>
+    <p>No monthly rent. No platform that can lock you out. We build it once, hand you the keys — the code, the domain, the hosting login — and it's yours forever.</p>
+    <div class="hero-ctas">
+      <a class="btn" id="waHero" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.2.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.51-.17-.01-.36-.01-.56-.01s-.51.08-.78.36c-.26.29-1.02.99-1.02 2.42s1.04 2.81 1.19 3.01c.15.2 2.05 3.13 4.97 4.39.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.11.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.34z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.24-1.37a9.86 9.86 0 0 0 4.8 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.25 8.23z"/></svg>
+        Own a Website Now
+      </a>
+      <a class="btn btn-ghost" href="#pricing">See pricing</a>
+    </div>
+
+    <div class="seal-wrap">
+      <svg class="seal" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="92" fill="none" stroke="#b08d57" stroke-width="2" stroke-dasharray="3 4"/>
+        <circle cx="100" cy="100" r="78" fill="none" stroke="#b08d57" stroke-width="1.5"/>
+        <path id="sealCircle" d="M 100 100 m -60 0 a 60 60 0 1 1 120 0 a 60 60 0 1 1 -120 0" fill="none"/>
+        <text font-family="JetBrains Mono, monospace" font-size="11.5" letter-spacing="3" fill="#d3b077">
+          <textPath href="#sealCircle" startOffset="2%">CERTIFICATE OF OWNERSHIP • CERTIFICATE OF OWNERSHIP •</textPath>
+        </text>
+        <text x="100" y="93" text-anchor="middle" font-family="Fraunces, serif" font-size="26" font-weight="700" fill="#f7f2e7">OWNED</text>
+        <text x="100" y="114" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2" fill="#b08d57">NOT RENTED</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="compare">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">the difference</span>
+      <h2>Renting vs. owning</h2>
+      <p>Most "website plans" are really leases. Miss a payment or the platform changes its rules, and your site is gone. Ownership means it can't be taken from you.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-col rent">
+        <h3>Renting</h3>
+        <span class="tag">Typical builder / subscription plan</span>
+        <ul class="compare-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Pay every single month, forever</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Platform can suspend or delete your site</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>You never get the actual source code</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Your domain is often tied to their system</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Same templates as thousands of others</li>
+        </ul>
+      </div>
+      <div class="compare-col own">
+        <h3>Owning, with us</h3>
+        <span class="tag">One-time build. Yours for life.</span>
+        <ul class="compare-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Pay once at launch — that's it</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Full source code handed over to you</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Your own domain and hosting account</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Designed for your business, not a template</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Nothing to cancel, because nothing renews</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="pricing-line">
+      <span class="eyebrow">pricing</span>
+      <h2>Every build is priced for what you actually need.</h2>
+      <p>No fixed packages, no guesswork — <strong>message +91 80921 75730 on WhatsApp</strong> and get a straight, one-time price for your site.</p>
+      <a class="btn" id="waPricing" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.2.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.51-.17-.01-.36-.01-.56-.01s-.51.08-.78.36c-.26.29-1.02.99-1.02 2.42s1.04 2.81 1.19 3.01c.15.2 2.05 3.13 4.97 4.39.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.11.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.34z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.24-1.37a9.86 9.86 0 0 0 4.8 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.25 8.23z"/></svg>
+        Know Your Price — Contact Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">how it works</span>
+      <h2>Three steps to holding the deed</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01 — Message us</span>
+        <h3>Tell us what you need</h3>
+        <p>Send a WhatsApp message with your business and what the site should do. Takes two minutes.</p>
+      </div>
+      <div class="step">
+        <span class="num">02 — We build</span>
+        <h3>We design & build it</h3>
+        <p>You'll see drafts as we go, and you're the one who signs off before it goes live.</p>
+      </div>
+      <div class="step">
+        <span class="num">03 — You own it</span>
+        <h3>We hand you the keys</h3>
+        <p>Domain, hosting login, and source code — all transferred to accounts in your name.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap" style="max-width:760px;">
+    <div class="section-head">
+      <span class="eyebrow">questions</span>
+      <h2>Before you decide</h2>
+    </div>
+
+    <div class="faq-item open">
+      <div class="faq-q">Do I actually own the website afterward?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div class="faq-a">Yes. You get the source code, the domain registered in your name, and admin access to hosting. Nothing is held back on our end.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I move to another developer later?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div class="faq-a">Any developer can pick up the project, because everything is handed over in standard, non-proprietary formats.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I need changes after launch?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div class="faq-a">Each plan includes a set number of revision rounds. After that, small edits are quoted individually — there's no forced monthly plan.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you handle hosting and the domain?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div class="faq-a">We set both up for you, but the accounts are registered under your name and email from day one — so you're always in control.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-banner">
+      <h2>Stop paying rent on something that should be yours.</h2>
+      <p>Message us on WhatsApp and tell us what you're building. We'll reply with next steps the same day.</p>
+      <a class="btn" id="waCtaBanner" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.2.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.51-.17-.01-.36-.01-.56-.01s-.51.08-.78.36c-.26.29-1.02.99-1.02 2.42s1.04 2.81 1.19 3.01c.15.2 2.05 3.13 4.97 4.39.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.11.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.34z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.24-1.37a9.86 9.86 0 0 0 4.8 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.25 8.23z"/></svg>
+        Own a Website Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    OWN. — websites people actually own · &copy; 2026 · WhatsApp +91 80921 75730
+  </div>
+</footer>
+
+<a class="float-wa" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.2.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.51-.17-.01-.36-.01-.56-.01s-.51.08-.78.36c-.26.29-1.02.99-1.02 2.42s1.04 2.81 1.19 3.01c.15.2 2.05 3.13 4.97 4.39.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.11.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.34z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.24-1.37a9.86 9.86 0 0 0 4.8 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.25 8.23z"/></svg>
+</a>
+
+<script>
+  const PHONE = "918092175730";
+
+  function waLink(text){
+    return "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(text);
+  }
+
+  document.getElementById("waNav").href = waLink("Hi, I want to own a website. Can you tell me more?");
+  document.getElementById("waHero").href = waLink("Hi, I want to own a website. Can you tell me more?");
+  document.getElementById("waCtaBanner").href = waLink("Hi, I want to own a website. Can you tell me more?");
+  document.getElementById("waFloat").href = waLink("Hi, I want to own a website. Can you tell me more?");
+  document.getElementById("waPricing").href = waLink("Hi, I'd like to know the pricing for a website.");
+
+  document.querySelectorAll(".faq-item").forEach(function(item){
+    item.querySelector(".faq-q").addEventListener("click", function(){
+      var wasOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item").forEach(function(i){ i.classList.remove("open"); });
+      if(!wasOpen) item.classList.add("open");
+    });
+  });
+</script>
+
+</body>
+</html>
